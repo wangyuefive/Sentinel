@@ -15,8 +15,14 @@
  */
 package com.alibaba.csp.sentinel.demo.annotation.aop;
 
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eric Zhao
@@ -26,5 +32,27 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
+        initFlowQpsRule();
+    }
+
+    /**
+     * 初始化限流规则
+     */
+    public  static void initFlowQpsRule() {
+        List<FlowRule> rules = new ArrayList<>();
+        FlowRule rule = new FlowRule("hello");
+        // set limit qps to 20
+        rule.setCount(10);
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setLimitApp("default");
+        rules.add(rule);
+
+        FlowRule rule1 = new FlowRule("test");
+        // set limit qps to 20
+        rule1.setCount(10);
+        rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule1.setLimitApp("default");
+        rules.add(rule1);
+        FlowRuleManager.loadRules(rules);
     }
 }
