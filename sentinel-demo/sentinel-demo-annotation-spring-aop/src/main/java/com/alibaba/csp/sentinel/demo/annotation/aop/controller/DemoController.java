@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eric Zhao
  */
@@ -33,12 +36,13 @@ public class DemoController {
     private TestService service;
 
     @GetMapping("/foo")
-    public String apiFoo(@RequestParam(required = false) Long t) throws Exception {
+    public String apiFoo(@RequestParam(required = false) Long t,
+                         HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (t == null) {
             t = System.currentTimeMillis();
         }
-        service.test();
-        return service.hello(t);
+        service.test(request, response);
+        return service.hello(t, request, response);
     }
 
     @GetMapping("/baz/{name}")

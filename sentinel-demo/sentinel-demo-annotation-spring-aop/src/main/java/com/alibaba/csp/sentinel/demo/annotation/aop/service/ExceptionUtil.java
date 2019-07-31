@@ -17,12 +17,15 @@ package com.alibaba.csp.sentinel.demo.annotation.aop.service;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eric Zhao
  */
 public final class ExceptionUtil {
 
-    public static void handleException(BlockException ex) {
+    public static void handleException(HttpServletRequest request, HttpServletResponse response, BlockException ex) {
         // Handler method that handles BlockException when blocked.
         // The method parameter list should match original method, with the last additional
         // parameter with type BlockException. The return type should be same as the original method.
@@ -30,5 +33,6 @@ public final class ExceptionUtil {
         // If you want to use method in other classes, you can set the blockHandlerClass
         // with corresponding Class (Note the method in other classes must be static).
         System.out.println("Oops: " + ex.getClass().getCanonicalName());
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 }

@@ -15,14 +15,17 @@
  */
 package com.alibaba.csp.sentinel.demo.annotation.aop.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eric Zhao
  */
 public interface TestService {
 
-    void test();
+    void test(HttpServletRequest request, HttpServletResponse response);
 
-    String hello(long s);
+    String hello(long s, HttpServletRequest request, HttpServletResponse response);
 
     String helloAnother(String name);
 }

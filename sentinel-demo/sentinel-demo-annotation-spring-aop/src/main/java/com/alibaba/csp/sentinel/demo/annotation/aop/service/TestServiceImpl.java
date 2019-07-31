@@ -20,6 +20,9 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eric Zhao
  */
@@ -28,13 +31,13 @@ public class TestServiceImpl implements TestService {
 
     @Override
     @SentinelResource(value = "test", blockHandler = "handleException", blockHandlerClass = {ExceptionUtil.class})
-    public void test() {
+    public void test(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Test");
     }
 
     @Override
     @SentinelResource(value = "hello", fallback = "helloFallback")
-    public String hello(long s) {
+    public String hello(long s, HttpServletRequest request, HttpServletResponse response) {
         if (s < 0) {
             throw new IllegalArgumentException("invalid arg");
         }
@@ -54,9 +57,10 @@ public class TestServiceImpl implements TestService {
         return "Hello, " + name;
     }
 
-    public String helloFallback(long s, Throwable ex) {
+    public String helloFallback(long s,  HttpServletRequest request, HttpServletResponse response, Throwable ex) {
         // Do some log here.
         ex.printStackTrace();
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return "Oops, error occurred at " + s;
     }
 
