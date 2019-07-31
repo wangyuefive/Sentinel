@@ -53,6 +53,13 @@ public class DemoApplication {
         rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule1.setLimitApp("default");
         rules.add(rule1);
+
+        FlowRule rule2 = new FlowRule("/openapi/works/*");
+        // set limit qps to 20
+        rule2.setCount(10);
+        rule2.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule2.setLimitApp("default");
+        rules.add(rule2);
         FlowRuleManager.loadRules(rules);
     }
 }

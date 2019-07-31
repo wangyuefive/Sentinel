@@ -1,6 +1,8 @@
 package com.alibaba.csp.sentinel.demo.annotation.aop.config;
 
 import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
+import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
+import com.alibaba.csp.sentinel.adapter.servlet.config.WebServletConfig;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,17 @@ public class FilterConfig {
         registration.setName("sentinelFilter");
         registration.setOrder(1);
 
+        setBlockPage();
+        initWebBackManager();
         return registration;
     }
+
+    private void setBlockPage() {
+        WebServletConfig.setBlockPage("/403.html");
+    }
+
+    private void initWebBackManager() {
+        WebCallbackManager.setUrlCleaner(new CustomUrlCleaner());
+    }
+
 }
