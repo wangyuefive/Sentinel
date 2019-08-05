@@ -43,7 +43,9 @@ public class DemoApplication {
         FlowRule rule = new FlowRule("hello");
         // set limit qps to 20
         rule.setCount(10);
+        rule.setStrategy(RuleConstant.STRATEGY_DIRECT);
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_DEFAULT);
         rule.setLimitApp("default");
         rules.add(rule);
 

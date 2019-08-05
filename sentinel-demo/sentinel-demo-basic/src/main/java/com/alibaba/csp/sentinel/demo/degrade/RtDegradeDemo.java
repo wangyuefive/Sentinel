@@ -127,9 +127,9 @@ public class RtDegradeDemo {
         DegradeRule rule = new DegradeRule();
         rule.setResource(KEY);
         // set threshold rt, 10 ms
-        rule.setCount(10);
+        rule.setCount(10);   // RT阈值，10ms，
         rule.setGrade(RuleConstant.DEGRADE_GRADE_RT);
-        rule.setTimeWindow(10);
+        rule.setTimeWindow(10); // 时间窗口10s
         rules.add(rule);
         DegradeRuleManager.loadRules(rules);
     }

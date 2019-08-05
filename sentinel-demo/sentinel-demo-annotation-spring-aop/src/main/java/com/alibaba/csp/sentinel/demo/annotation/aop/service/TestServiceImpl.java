@@ -23,9 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author Eric Zhao
- */
+
 @Service
 public class TestServiceImpl implements TestService {
 
