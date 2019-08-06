@@ -2,6 +2,7 @@ package com.alibaba.hystrix.demo.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @DefaultProperties(defaultFallback = "defaultFail")
 public class HystrixController1 {
 
-    @HystrixCommand(fallbackMethod = "fail1")
+    @HystrixCommand(commandProperties = { @HystrixProperty(name = "circuitBreaker.enabled", value = "true")},
+                    fallbackMethod = "fail1")
     @GetMapping("/test1")
     public String test1() {
         throw new RuntimeException();
